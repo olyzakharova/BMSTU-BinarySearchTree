@@ -171,12 +171,12 @@ public:
 
 		return nullptr;
 	 }
-	};
+	}
 
 	~BinarySearchTree() {
 
 	    delete root_;
 		size_ = 0;
-	};
+	}
 };
 

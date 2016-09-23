@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-#include <inizializer_list>
+#include <initializer_list>
 
 template <typename T>
 class BinarySearchTree;

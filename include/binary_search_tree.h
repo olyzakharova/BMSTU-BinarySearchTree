@@ -112,8 +112,8 @@ public:
 		Node* myNode = nullptr;
 		if (root_ == nullptr)
 		{
-			root_ = new Node(value);
-			size_++;
+//			root_ = new Node(value);
+//			size_++;
 			return true;
 		}
 		while (thisNode)
@@ -140,7 +140,7 @@ public:
 		{
 			myNode->right_ = new Node(value);
 		};
-		size_++;
+//		size_++;
 		return true;
 	};
 

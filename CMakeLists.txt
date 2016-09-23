@@ -1,6 +1,6 @@
 # CMakeLists.txt
 
-project(binare_search_tree)
+project(binary_search_tree)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 

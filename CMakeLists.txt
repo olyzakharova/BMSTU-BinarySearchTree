@@ -1,9 +1,7 @@
-# CMakeLists.txt
-cmake_minimum_required(VERSION 2.8.7)
+cmake_minimum_required(VERSION 3.3)
 project(binary_search_tree)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
-add_library(binary_search_tree STATIC ${CMAKE_CURRENT_SOURCE_DIR}/source/binary_search_tree.cpp)
-
-add_executable(Examples ${CMAKE_CURRENT_SOURCE_DIR}/examples/main.cpp)
+set(SOURCE_FILES main.cpp include/binary_search_tree.h source/binary_search_tree.cpp examples/main.cpp)
+add_executable(binary_search_tree ${SOURCE_FILES} include/binary_search_tree.h source/binary_search_tree.cpp examples/main.cpp)

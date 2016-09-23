@@ -66,8 +66,7 @@ private:
 	};
 
 public: 
-        Node * root_;
-	size_t size_;
+        
 	BinarySearchTree()
 	{
 		size_ = 0;

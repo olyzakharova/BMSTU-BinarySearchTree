@@ -178,5 +178,5 @@ public:
 	    delete root_;
 		size_ = 0;
 	};
-}
+};
 

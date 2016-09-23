@@ -49,6 +49,7 @@ template <typename T>
 class BinarySearchTree {
 
 private:
+       struct Node;
 	Node * root_;
 	size_t size_;
 

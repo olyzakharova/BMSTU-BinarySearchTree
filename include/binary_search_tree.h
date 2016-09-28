@@ -42,7 +42,7 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
 };
 
 template <typename T>
-std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
+std::ofstream & operator<< (std::ofstream & out, const BinarySearchTree<T> & tree)
 {
 	tree.PreorderPrint(out, tree.GetRoot());
 	return out;
@@ -71,7 +71,7 @@ private:
 public:
 	
 	
-	BinarySearchTree() : root(nullptr), size_(0) {}
+	BinarySearchTree() : root_(nullptr), size_(0) {}
 	
     BinarySearchTree(const std::initializer_list<T> & list)
 	{

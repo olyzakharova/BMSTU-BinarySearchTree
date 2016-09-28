@@ -24,6 +24,12 @@ std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree
 	tree.InorderPrint(out, tree.GetRoot());
 	return out;
 };
+template <typename T>
+std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
+{
+	tree.PreorderPrint(out, tree.GetRoot());
+	return out;
+};
 
 template <typename T>
 std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
@@ -39,13 +45,6 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
 	}
 
 	return in;
-};
-
-template <typename T>
-std::ofstream & operator<< (std::ofstream & out, const BinarySearchTree<T> & tree)
-{
-	tree.PreorderPrint(out, tree.GetRoot());
-	return out;
 };
 
 template <typename T>

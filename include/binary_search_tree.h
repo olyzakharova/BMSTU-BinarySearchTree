@@ -6,28 +6,24 @@
 template <typename T>
 class BinarySearchTree;
 
-
+//operator >> (std::istream&, BinarySearchTree<T>&); // при реализации использовать прямой обход C-L-R.
+//operator << (std::ostream&, const BinarySearchTree<T>&); // при реализации использовать симметричный обход R-C-L.
+//operator >> (std::ifstream&, BinarySearchTree<T>&); // при реализации использовать прямой обход С-L-R.
+//+operator << (std::ofstream&, const BinarySearchTree<T>&); // при реализации использовать прямой обход С-L-R.
 
 template <typename T>
 std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree) {
-	
-	tree.PreorderPrint(out, tree.GetRoot());
-    return out;
-};
-
-
-
-
-template <typename T>
-std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree) {
 
 	tree.PreorderPrint(out, tree.GetRoot());
 	return out;
 };
 
+template <typename T>
+std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree) {
 
-
-
+	tree.InorderPrint(out, tree.GetRoot());
+	return out;
+};
 
 template <typename T>
 std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
@@ -46,10 +42,17 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
 };
 
 template <typename T>
+std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
+{
+	tree.PreorderPrint(out, tree.GetRoot());
+	return out;
+};
+
+template <typename T>
 class BinarySearchTree {
 
 private:
-       struct Node;
+	struct Node;
 	Node * root_;
 	size_t size_;
 
@@ -65,15 +68,12 @@ private:
 		Node * right_;
 	};
 
-public: 
-        
-	BinarySearchTree()
-	{
-		size_ = 0;
-		root_ = nullptr;
-	};
-
-	BinarySearchTree(const std::initializer_list<T> & list)
+public:
+	
+	
+	BinarySearchTree() : root(nullptr), size_(0) {}
+	
+    BinarySearchTree(const std::initializer_list<T> & list)
 	{
 		size_ = 0;
 		root_ = nullptr;
@@ -84,28 +84,59 @@ public:
 	};
 
 
+	BinarySearchTree(const BinarySearchTree& tree): size_(tree.size_), root_(nullptr)//конструктор копирования
+	{
+		root_ = new Node(0);
+		root_ = root_->copy(tree.root_);
+	};
+
+
+	BinarySearchTree(BinarySearchTree&& tree): size_(tree.size_), root_(nullptr) // конструктор перемещения
+	{ 
+		root_ = tree.root_;
+		tree.size_ = 0;
+		tree.root_ = nullptr;
+	};
+	
+	
+
 	Node* GetRoot() const
 	{
 		return root_;
 	}
 
-	void PreorderPrint(std::ostream & str, Node* ThisNode) const noexcept
+	
+	void PreorderPrint(std::ostream & str, Node* thisNode) const noexcept // прямой
 	{
-		if (ThisNode == NULL) {
+		if (thisNode == NULL) {
 
 			return;
 		}
-		str << ThisNode->value_ << " ";
-		PreorderPrint(str, ThisNode->left_);
-		PreorderPrint(str, ThisNode->right_);
+		str << thisNode->value_ << " ";
+		PreorderPrint(str, thisNode->left_);
+		PreorderPrint(str, thisNode->right_);
 	}
 
-	auto size() const noexcept->size_t {
+	void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
+	{
+		if (thisNode == NULL) {
+
+			return;
+		}
+		
+		InorderPrint(str, thisNode->left_);
+		str << thisNode->value_ << " ";
+		InorderPrint(str, thisNode->right_);
+
+	}
+
+	auto size() const noexcept->size_t
+	{
 
 		return size_;
 	};
-	
-	
+
+
 	auto insert(const T & value) noexcept -> bool {
 
 		Node* thisNode = root_;
@@ -155,7 +186,7 @@ public:
 	};
 
 	while (thisNode)
-	 {
+	{
 		if (value < thisNode->value_)
 		{
 			thisNode = thisNode->left_;
@@ -170,12 +201,69 @@ public:
 		}
 
 		return nullptr;
-	 }
 	}
+	}
+	 
 
-	~BinarySearchTree() {
+	    auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool 
+	    {
+			
+			if (firstnode_ == nullptr && secondnode_ == nullptr)
+			{
+				return(true);
 
-	    delete root_;
+			}
+			
+			else if (firstnode_ != nullptr && secondnode_ != nullptr)
+				{
+					return(
+						comparison(firstnode_->left_, secondnode_->left_) &&
+						comparison(firstnode_->right_, secondnode_->right_)
+						);
+				}
+				else return(false);
+		}
+	
+	  
+
+	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
+	{ 
+		if (this == &tree)
+			return *this;
+
+		//дописать функцию
+		
+	};
+	
+	auto operator = (BinarySearchTree&& tree)->BinarySearchTree& //перемещения
+	{
+		if (this == &tree)
+		     return *this;
+		
+		size_ = tree.size_;
+		tree.size_ = 0;
+
+		delete root_;			
+		root_ = tree.root_;
+		tree.root_ = nullptr;
+        return *this;
+	};
+	
+	
+	  auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
+	{
+		if (size_ != tree.size_) { return false; }
+		else
+		{
+			comparison(root_, tree.root_);
+		}
+	};
+		~BinarySearchTree() {
+
+		delete root_;
 		size_ = 0;
 	}
+
+
+	
 };

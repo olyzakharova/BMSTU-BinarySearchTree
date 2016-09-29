@@ -71,7 +71,7 @@ private:
 public:
 	
 	
-	BinarySearchTree() : root(nullptr), size_(0) {}
+	BinarySearchTree() : root_(nullptr), size_(0) {}
 	
     BinarySearchTree(const std::initializer_list<T> & list)
 	{
@@ -231,8 +231,8 @@ public:
 			return NULL;
 
 		Node * newnode = new Node(tree->value);
-		newnode->left_ = copirate(node->left_);
-		newnode->right_ = copirate(node->right_);
+		newnode->left_ = copirate(tree->left_);
+		newnode->right_ = copirate(tree->right_);
 
 		return newnode;
 	}
@@ -243,7 +243,7 @@ public:
 			return *this;
 
 		size_ = tree.size_;
-		root_ = root->copirate(tree.root_);
+		root_ = root_->copirate(tree.root_);
 		return *this;
 		
 	};

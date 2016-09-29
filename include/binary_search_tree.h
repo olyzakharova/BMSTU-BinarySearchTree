@@ -24,12 +24,6 @@ std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree
 	tree.InorderPrint(out, tree.GetRoot());
 	return out;
 };
-template <typename T>
-std::ifstream & operator << (std::ifstream & out, const BinarySearchTree<T> & tree)
-{
-	tree.PreorderPrint(out, tree.GetRoot());
-	return out;
-};
 
 template <typename T>
 std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
@@ -45,6 +39,13 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
 	}
 
 	return in;
+};
+
+template <typename T>
+std::ifstream & operator << (std::ifstream & out, const BinarySearchTree<T> & tree)
+{
+	tree.PreorderPrint(out, tree.GetRoot());
+	return out;
 };
 
 template <typename T>
@@ -70,7 +71,7 @@ private:
 public:
 	
 	
-	BinarySearchTree() : root_(nullptr), size_(0) {}
+	BinarySearchTree() : root(nullptr), size_(0) {}
 	
     BinarySearchTree(const std::initializer_list<T> & list)
 	{
@@ -86,7 +87,7 @@ public:
 	BinarySearchTree(const BinarySearchTree& tree): size_(tree.size_), root_(nullptr)//конструктор копирования
 	{
 		root_ = new Node(0);
-	        root_ = root_->copirate(tree.root_);// дописать функцию копирования 
+		root_ = root_->copirate(tree.root_);
 	};
 
 
@@ -224,13 +225,26 @@ public:
 		}
 	
 	  
+	auto copirate(Node * tree) -> Node*
+	{
+		if (tree == NULL)
+			return NULL;
+
+		Node * newnode = new Node(tree->value);
+		newnode->left_ = copirate(node->left_);
+		newnode->right_ = copirate(node->right_);
+
+		return newnode;
+	}
 
 	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
 	{ 
 		if (this == &tree)
 			return *this;
 
-		//дописать функцию
+		size_ = tree.size_;
+		root_ = root->copirate(tree.root_);
+		return *this;
 		
 	};
 	
@@ -251,11 +265,11 @@ public:
 	
 	  auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
 	{
-		if (size_ != tree.size_) 
+		if (size_ != tree.size_)
 		{ 
-			
-			return false; 
+			return false;
 		}
+		
 		else
 		{
 			comparison(root_, tree.root_);
@@ -270,3 +284,4 @@ public:
 
 	
 };
+

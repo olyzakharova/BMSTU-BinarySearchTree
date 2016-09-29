@@ -86,7 +86,7 @@ public:
 	BinarySearchTree(const BinarySearchTree& tree): size_(tree.size_), root_(nullptr)//конструктор копирования
 	{
 		root_ = new Node(0);
-		root_ = root_->copy(tree.root_);
+	        root_ = root_->copirate(tree.root_);// дописать функцию копирования 
 	};
 
 
@@ -251,7 +251,11 @@ public:
 	
 	  auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
 	{
-		if (size_ != tree.size_) { return false; }
+		if (size_ != tree.size_) 
+		{ 
+			
+			return false; 
+		}
 		else
 		{
 			comparison(root_, tree.root_);

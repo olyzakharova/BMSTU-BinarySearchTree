@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "binary_search_tree.h"
 
-SCENARIO ("Size of empty tree must be 0") 
+SCENARIO ("Size of empty tree must be 0", "[size 0]") 
 {
     GIVEN ("empty tree")
     {
@@ -18,7 +18,7 @@ SCENARIO ("Size of empty tree must be 0")
                 
     }
 }
-SCENARIO ("Size of empty tree mustn't be 0")
+SCENARIO ("Size of empty tree mustn't be 0", "[size !0]")
 {
     GIVEN ("not empty tree") 
     {
@@ -35,7 +35,7 @@ SCENARIO ("Size of empty tree mustn't be 0")
     }
 }
 
-SCENARIO (" for constant tree and non-constant tree ")
+SCENARIO (" for constant tree and non-constant tree ", "[const&nonconst]")
 {
     GIVEN("2 trees: constant and non-constant")
     {

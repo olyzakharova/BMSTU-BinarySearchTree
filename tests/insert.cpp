@@ -1,3 +1,4 @@
+//
 // insert.cpp
 
 //- если элемент уже присутствует в дереве, то метод должен вернуть false
@@ -18,13 +19,14 @@ SCENARIO("if already exist")
     {
         BinarySearchTree<int> tree{1, 2, 3, 4, 5, 6, 7};
         int object= 5;
+        auto current=tree.size();
         WHEN("insert")
         {
          tree.insert(object);
             THEN("if it already in the tree")
             {
                 REQUIRE(!tree.insert(object));
-                REQUIRE("size doesn't change");
+                REQUIRE(tree.size()== current);
             }
         }
     }
@@ -36,13 +38,14 @@ SCENARIO("if not already exist")
     {
         BinarySearchTree<int> tree{1, 2, 3, 4, 5, 6, 7};
         int object= 9;
+        auto current=tree.size();
         WHEN("insert")
         {
             tree.insert(object);
             THEN("insert ok")
-            {
+            {   
                 REQUIRE(tree.insert(object));
-                REQUIRE(size++);
+                REQUIRE(current++);
             }
         }
     }

@@ -2,14 +2,11 @@
 #include <iostream>
 #include <fstream>
 #include <initializer_list>
+#include <memory> //для умных указателей
 
 template <typename T>
 class BinarySearchTree;
 
-//operator >> (std::istream&, BinarySearchTree<T>&); // при реализации использовать прямой обход C-L-R.
-//operator << (std::ostream&, const BinarySearchTree<T>&); // при реализации использовать симметричный обход R-C-L.
-//operator >> (std::ifstream&, BinarySearchTree<T>&); // при реализации использовать прямой обход С-L-R.
-//+operator << (std::ofstream&, const BinarySearchTree<T>&); // при реализации использовать прямой обход С-L-R.
 
 template <typename T>
 std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree) {
@@ -69,14 +66,12 @@ private:
 	};
 
 public:
-	
-	
+
+
 	BinarySearchTree() : root_(nullptr), size_(0) {}
-	
-    BinarySearchTree(const std::initializer_list<T> & list)
+
+	BinarySearchTree(const std::initializer_list<T> & list) : size_(0), root_(nullptr)
 	{
-		size_ = 0;
-		root_ = nullptr;
 		for (auto it = list.begin(); it != list.end(); ++it)
 		{
 			insert(*it);
@@ -84,31 +79,30 @@ public:
 	};
 
 
-	BinarySearchTree(const BinarySearchTree& tree): size_(tree.size_), root_(nullptr)//конструктор копирования
+	BinarySearchTree(const BinarySearchTree& tree) : size_(tree.size_), root_(nullptr)//конструктор копирования
 	{
-		root_ = new Node(0);
-		root_ = root_->copirate(tree.root_);
+		root_ = copirate(tree.root_);
 	};
 
 
-	BinarySearchTree(BinarySearchTree&& tree): size_(tree.size_), root_(nullptr) // конструктор перемещения
-	{ 
-		root_ = tree.root_;
+	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(nullptr), root_(tree.root_)// конструктор перемещения
+	{
 		tree.size_ = 0;
 		tree.root_ = nullptr;
 	};
-	
-	
+
+
 
 	Node* GetRoot() const
 	{
 		return root_;
 	}
 
-	
+
 	void PreorderPrint(std::ostream & str, Node* thisNode) const noexcept // прямой
 	{
-		if (thisNode == NULL) {
+		if (!thisNode)
+		{
 
 			return;
 		}
@@ -119,11 +113,12 @@ public:
 
 	void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
 	{
-		if (thisNode == NULL) {
+		if (!thisNode) 
+		{
 
 			return;
 		}
-		
+
 		InorderPrint(str, thisNode->left_);
 		str << thisNode->value_ << " ";
 		InorderPrint(str, thisNode->right_);
@@ -203,32 +198,34 @@ public:
 		return nullptr;
 	}
 	}
-	 
 
-	    auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool 
-	    {
-			
-			if (firstnode_ == nullptr && secondnode_ == nullptr)
-			{
-				return(true);
 
-			}
-			
-			else if (firstnode_ != nullptr && secondnode_ != nullptr)
-				{
-					return(
-						comparison(firstnode_->left_, secondnode_->left_) &&
-						comparison(firstnode_->right_, secondnode_->right_)
-						);
-				}
-				else return(false);
-		}
-	
-	  
-	auto copirate(Node * tree) -> Node*
+		auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool
 	{
-		if (tree == NULL)
+
+		if (firstnode_ == nullptr && secondnode_ == nullptr)
+		{
+			return(true);
+
+		}
+
+		else if (firstnode_ != nullptr && secondnode_ != nullptr)
+		{
+			return(
+				comparison(firstnode_->left_, secondnode_->left_) &&
+				comparison(firstnode_->right_, secondnode_->right_)
+				);
+		}
+		else return(false);
+	}
+
+
+	static auto copirate(Node * tree) -> Node*
+	{
+		if (!tree)
+		{
 			return NULL;
+		}
 
 		Node * newnode = new Node(tree->value);
 		newnode->left_ = copirate(tree->left_);
@@ -238,50 +235,49 @@ public:
 	}
 
 	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
-	{ 
+	{
 		if (this == &tree)
 			return *this;
 
 		size_ = tree.size_;
 		root_ = root_->copirate(tree.root_);
 		return *this;
-		
+
 	};
-	
+
 	auto operator = (BinarySearchTree&& tree)->BinarySearchTree& //перемещения
 	{
 		if (this == &tree)
-		     return *this;
-		
+			return *this;
+
 		size_ = tree.size_;
 		tree.size_ = 0;
 
-		delete root_;			
+		delete root_;
 		root_ = tree.root_;
 		tree.root_ = nullptr;
-        return *this;
+		return *this;
 	};
-	
-	
-	  auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
+
+
+	auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
 	{
 		if (size_ != tree.size_)
-		{ 
+		{
 			return false;
 		}
-		
+
 		else
 		{
 			comparison(root_, tree.root_);
 		}
 	};
-		~BinarySearchTree() {
+	~BinarySearchTree() {
 
 		delete root_;
 		size_ = 0;
 	}
 
 
-	
-};
 
+};

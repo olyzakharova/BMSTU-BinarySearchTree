@@ -88,14 +88,15 @@ public:
 		root_ = copy(tree.root_);
 	};
 
+	//BinarySearchTree(BinarySearchTree&& tree)= default {};// конструктор перемещения
 
-	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(tree.root_)// конструктор перемещения
+
+	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(std::move(tree.root_))// конструктор перемещения
 	{
-		tree.size_ = 0;
-		tree.root_ = nullptr;
+		
 	};
 
-
+	
 
 	Node* GetRoot() const
 	{
@@ -144,8 +145,9 @@ public:
 		//Node* thisNode = root_;
 		//Node* myNode = nullptr;
 
-		unique_ptr<Node> thisNode = root_;
+		unique_ptr<Node> thisNode = root_.get();
 		unique_ptr<Node> myNode = nullptr;
+
 		if (root_ == nullptr)
 		{
 			root_ = new Node(value);
@@ -185,7 +187,7 @@ public:
 	{
 
 		//Node* thisNode = root_;
-		unique_ptr<Node> thisNode = root_;
+		unique_ptr<Node> thisNode = root_.get();
 	if (!root_)
 
 	{
@@ -232,6 +234,49 @@ public:
 		else return(false);
 	}
 
+	auto remove(const T value, unique_ptr<Node> node) noexcept-> bool   // удаление узла,в котором находится объект со значением value
+	{ 
+
+		if (!node)
+			return false;
+		
+		else 
+		{
+		 
+		}
+
+	
+	}
+
+
+
+	/*bool BinarySearchTree::remove(int value) {
+		if (root == NULL)
+			return false;
+		else {
+			if (root->getValue() == value) {
+				BSTNode auxRoot(0);
+				auxRoot.setLeftChild(root);
+				BSTNode* removedNode = root->remove(value, &auxRoot);
+				root = auxRoot.getLeft();
+				if (removedNode != NULL) {
+					delete removedNode;
+					return true;
+				}
+				else
+					return false;
+			}
+			else {
+				BSTNode* removedNode = root->remove(value, NULL);
+				if (removedNode != NULL) {
+					delete removedNode;
+					return true;
+				}
+				else
+					return false;
+			}
+		}
+	}*/
 
 	//static auto copy(Node * tree) -> Node*
 	static auto copy(unique_ptr<Node> tree) -> unique_ptr<Node>
@@ -242,7 +287,7 @@ public:
 		}
 
 		//Node * newnode = new Node(tree->value);
-		unique_ptr<Node> newnode = new Node(tree->value);
+		unique_ptr<Node> newnode =std::make_unique<Node>(tree->value);
 		newnode->left_ = copy(tree->left_);
 		newnode->right_ = copy(tree->right_);
 
@@ -296,4 +341,3 @@ public:
 
 
 };
-

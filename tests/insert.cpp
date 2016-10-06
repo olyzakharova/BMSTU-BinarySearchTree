@@ -19,14 +19,12 @@ SCENARIO("if already exist")
     {
         BinarySearchTree<int> tree{1, 2, 3, 4, 5, 6, 7};
         int object= 5;
-        auto current=tree.size();
         WHEN("insert")
         {
          tree.insert(object);
             THEN("if it already in the tree")
             {
                 REQUIRE(!tree.insert(object));
-                REQUIRE(tree.size()== current);
             }
         }
     }

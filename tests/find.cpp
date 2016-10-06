@@ -6,9 +6,9 @@ SCENARIO ("if object exist")
    GIVEN("object")
    {
        int object=8;
-       BinarySearchTree <int> tree;
+       BinarySearchTree <int> tree{1, 2, 3, 8};
        WHEN("find")
-       {
+       {   tree.find(object);
            THEN(":)")
            {
                REQUIRE(tree.find(object)!=nullptr);
@@ -36,7 +36,7 @@ SCENARIO("for constant and non-constant")
     {
       BinarySearchTree <int> tree1 {1, 2, 3, 4, 5};
       const BinarySearchTree <int> tree2 {1, 2, 7, 9, 10};
-      int object=12;
+      int object=2;
         WHEN("find")
         {
             tree1.find(object);

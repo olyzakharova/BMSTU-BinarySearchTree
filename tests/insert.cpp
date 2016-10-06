@@ -57,12 +57,15 @@ SCENARIO("if < root")
     {
         BinarySearchTree<int> tree{9, 7};
         int object= 2;
+        BinarySearchTree<int> newtree {9, 7, 2}
+      
         WHEN("insert")
         {
             tree.insert(object);
-            THEN("insert ok")
-            {
-                REQUIRE(tree.GetRoot()->left_=tree.insert(object));
+            THEN("insert left ok")
+            {   
+                REQUIRE(tree == newtree);
+                
             }
         }
     }
@@ -74,12 +77,13 @@ SCENARIO("if > root")
     {
         BinarySearchTree<int> tree{1, 2};
         int object= 9;
+        BinarySearchTree<int> newtree{1, 2, 9}
         WHEN("insert")
         {
             tree.insert(object);
             THEN("insert ok")
             {
-                REQUIRE(tree.GetRoot()->right_=tree.insert(object));
+                REQUIRE(tree== newtree);
             }
         }
     }

@@ -85,7 +85,7 @@ public:
 	};
 
 
-	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(nullptr), root_(tree.root_)// конструктор перемещения
+	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(tree.root_)// конструктор перемещения
 	{
 		tree.size_ = 0;
 		tree.root_ = nullptr;

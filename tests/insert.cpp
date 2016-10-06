@@ -75,8 +75,9 @@ SCENARIO("if > root")
     GIVEN("object and root")
     {
         BinarySearchTree<int> tree{1, 2};
-        int object= 9;
-        BinarySearchTree<int> newtree{1, 2, 9}
+        int object= 4;
+        BinarySearchTree<int> newtree{1, 2, 4};
+       
         WHEN("insert")
         {
             tree.insert(object);

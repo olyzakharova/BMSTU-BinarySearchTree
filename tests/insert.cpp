@@ -44,8 +44,7 @@ SCENARIO("if not already exist")
             tree.insert(object);
             THEN("insert ok")
             {   
-                REQUIRE(tree.insert(object));
-                REQUIRE(current++);
+                REQUIRE(tree.insert(object));                
             }
         }
     }

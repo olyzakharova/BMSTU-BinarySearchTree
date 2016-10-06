@@ -52,17 +52,16 @@ SCENARIO("if < root")
 {
     GIVEN("object and root")
     {
-        BinarySearchTree<int> tree{9, 7};
-        int object= 2;
-        BinarySearchTree<int> newtree {9, 7, 2};
+        BinarySearchTree<int> tree={9, 7};
+        int object = 2;
+        BinarySearchTree<int> newtree={9, 7, 2};
       
         WHEN("insert")
         {
             tree.insert(object);
             THEN ("insert left ok") 
-            { 
-                REQUIRE(tree==newtree);
-            }
+            REQUIRE(tree==newtree);
+            
         }
     }
 }
@@ -71,17 +70,16 @@ SCENARIO("if > root")
 {
     GIVEN("object and root")
     {
-        BinarySearchTree<int> tree{1, 2};
-        int object= 4;
-        BinarySearchTree<int> newtree{1, 2, 4};
+        BinarySearchTree<int> tree={1, 2};
+        int object = 4;
+        BinarySearchTree<int> newtree={1, 2, 4};
        
         WHEN("insert")
         {
             tree.insert(object);
             THEN("insert right ok")
-            {
-                REQUIRE(tree== newtree);
-            }
+            REQUIRE(tree == newtree);
+            
         }
     }
 }

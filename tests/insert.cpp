@@ -48,38 +48,37 @@ SCENARIO("if not already exist")
     }
 }
 
-SCENARIO("if < root")
+SCENARIO ("If object < root")
 {
-    GIVEN("object and root")
+    GIVEN ("object and root")
     {
-        BinarySearchTree<int> tree={9, 7};
-        int object = 2;
-        BinarySearchTree<int> newtree={9, 7, 2};
-      
-        WHEN("insert")
+        BinarySearchTree <int> tree={9,4};
+        int object=1;
+        BinarySearchTree <int> rez={9,4,1};
+
+        WHEN ("insert")
         {
             tree.insert(object);
-            THEN ("insert left ok") 
-            { REQUIRE(tree==newtree); }
-            
-        }
+            THEN ("insert ok. (left)") 
+            { 
+                REQUIRE(tree==tree2);
+            }
+        };
     }
 }
 
-SCENARIO("if > root")
+SCENARIO ("If object > root")
 {
-    GIVEN("object and root")
+    GIVEN ("object and root")
     {
-        BinarySearchTree<int> tree={1, 2};
-        int object = 4;
-        BinarySearchTree<int> newtree={1, 2, 4};
-       
-        WHEN("insert")
+        BinarySearchTree <int> tree={1,3};
+        int object=5;
+        BinarySearchTree <int> tree2={1,3,5};
+
+        WHEN ("insert")
         {
             tree.insert(object);
-            THEN("insert right ok")
-            {  REQUIRE(tree == newtree); }
-            
-        }
+            THEN ("insert ok. (right)") { REQUIRE(tree==tree2);}
+        };
     }
 }

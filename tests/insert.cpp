@@ -60,7 +60,7 @@ SCENARIO("if < root")
         {
             tree.insert(object);
             THEN ("insert left ok") 
-            REQUIRE(tree==newtree);
+            { REQUIRE(tree==newtree); }
             
         }
     }
@@ -78,7 +78,7 @@ SCENARIO("if > root")
         {
             tree.insert(object);
             THEN("insert right ok")
-            REQUIRE(tree == newtree);
+            {  REQUIRE(tree == newtree); }
             
         }
     }

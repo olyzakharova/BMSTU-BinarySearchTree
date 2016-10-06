@@ -62,7 +62,7 @@ SCENARIO("if < root")
             tree.insert(object);
             THEN("insert ok")
             {
-                REQUIRE(tree.GetRoot->left_=tree.insert(object));
+                REQUIRE(tree.GetRoot()->left_=tree.insert(object));
             }
         }
     }
@@ -79,7 +79,7 @@ SCENARIO("if > root")
             tree.insert(object);
             THEN("insert ok")
             {
-                REQUIRE(tree.GetRoot->right_=tree.insert(object));
+                REQUIRE(tree.GetRoot()->right_=tree.insert(object));
             }
         }
     }

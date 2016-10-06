@@ -54,7 +54,7 @@ SCENARIO ("If object < root")
     {
         BinarySearchTree <int> tree={9,4};
         int object=1;
-        BinarySearchTree <int> rez={9,4,1};
+        BinarySearchTree <int> tree2={9,4,1};
 
         WHEN ("insert")
         {

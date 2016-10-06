@@ -132,7 +132,8 @@ public:
 	};
 
 
-	auto insert(const T & value) noexcept -> bool {
+	auto insert(const T & value) noexcept -> bool
+	{
 
 		Node* thisNode = root_;
 		Node* myNode = nullptr;
@@ -165,7 +166,8 @@ public:
 		else
 		{
 			myNode->right_ = new Node(value);
-		};
+		}
+		
 		size_++;
 		return true;
 	};

@@ -40,7 +40,7 @@ SCENARIO (" for constant tree and non-constant tree ", "[const&nonconst]")
     GIVEN("2 trees: constant and non-constant")
     {
         BinarySearchTree<int> tree1{1, 3, 7};
-        const BinarySearchTree<int> tree{2, 4, 6};
+        const BinarySearchTree<int> tree2{2, 4, 6};
         WHEN ("compare sizes")
         {
             THEN("sizes must be equal")

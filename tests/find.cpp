@@ -33,27 +33,33 @@ SCENARIO("if object doesn't exist")
 SCENARIO("for constant and non-constant")
 {
     GIVEN("2 objects:const and non-const")
-    {
-      BinarySearchTree <int> tree1 {1, 2, 3, 4, 5};
-      const BinarySearchTree <int> tree2 {1, 2, 7, 9, 10};
-      int object=2;
-        WHEN("find")
-        {
+    { 
+       BinarySearchTree <int> tree1 {1, 2, 3, 4, 5};
+     
+       const BinarySearchTree <int> tree2 {1, 2, 7, 9, 5};
+      
+      WHEN("find")
+        {   int object=2;
             tree1.find(object);
             tree2.find(object);
             THEN("ok")
-            {
+            {  
                 REQUIRE(tree1.find(object)!=nullptr);
                 REQUIRE(tree2.find(object)!=nullptr);
             }
-            THEN("not ok")
+        }
+       WHEN ("no") 
+       {
+            int object=12;
+           
+           THEN("not ok")
             {
                 REQUIRE(tree1.find(object)==nullptr);
                 REQUIRE(tree2.find(object)==nullptr);
-            }
+           }
         }
             
-        }
-    }
+     }
+  }
 
 

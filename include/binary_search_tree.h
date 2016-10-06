@@ -3,7 +3,6 @@
 #include <fstream>
 #include <initializer_list>
 #include <memory> //для умных указателей
-using namespace std;
 
 template <typename T>
 class BinarySearchTree;
@@ -51,8 +50,7 @@ class BinarySearchTree {
 
 private:
 	struct Node;
-	//Node * root_;
-	unique_ptr <Node> root_;
+	Node * root_;
 	size_t size_;
 
 	struct Node {
@@ -63,10 +61,8 @@ private:
 
 		};
 		T value_;
-		//Node * left_;
-		//Node * right_;
-		unique_ptr<Node> left_;
-		unique_ptr<Node> right_;
+		Node * left_;
+		Node * right_;
 	};
 
 public:
@@ -85,18 +81,17 @@ public:
 
 	BinarySearchTree(const BinarySearchTree& tree) : size_(tree.size_), root_(nullptr)//конструктор копирования
 	{
-		root_ = copy(tree.root_);
+		root_ = copirate(tree.root_);
 	};
 
-	//BinarySearchTree(BinarySearchTree&& tree)= default {};// конструктор перемещения
 
-
-	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(std::move(tree.root_))// конструктор перемещения
+	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(nullptr), root_(tree.root_)// конструктор перемещения
 	{
-		
+		tree.size_ = 0;
+		tree.root_ = nullptr;
 	};
 
-	
+
 
 	Node* GetRoot() const
 	{
@@ -104,8 +99,7 @@ public:
 	}
 
 
-	//void PreorderPrint(std::ostream & str, Node* thisNode) const noexcept // прямой
-	void PreorderPrint(std::ostream & str, unique_ptr<Node> thisNode) const noexcept // прямой
+	void PreorderPrint(std::ostream & str, Node* thisNode) const noexcept // прямой
 	{
 		if (!thisNode)
 		{
@@ -117,9 +111,7 @@ public:
 		PreorderPrint(str, thisNode->right_);
 	}
 
-	//void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
-	void InorderPrint(std::ostream & str, unique_ptr<Node> thisNode) const noexcept // симметричный
-	
+	void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
 	{
 		if (!thisNode) 
 		{
@@ -142,12 +134,8 @@ public:
 
 	auto insert(const T & value) noexcept -> bool {
 
-		//Node* thisNode = root_;
-		//Node* myNode = nullptr;
-
-		unique_ptr<Node> thisNode = root_.get();
-		unique_ptr<Node> myNode = nullptr;
-
+		Node* thisNode = root_;
+		Node* myNode = nullptr;
 		if (root_ == nullptr)
 		{
 			root_ = new Node(value);
@@ -183,11 +171,9 @@ public:
 	};
 
 
-	auto find(const T & value) const noexcept -> const T *
-	{
+	auto find(const T & value) const noexcept -> const T *{
 
-		//Node* thisNode = root_;
-		unique_ptr<Node> thisNode = root_.get();
+		Node* thisNode = root_;
 	if (!root_)
 
 	{
@@ -213,9 +199,8 @@ public:
 	}
 	}
 
-		
-		//auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool
-		auto comparison(const unique_ptr<Node> firstnode_, const unique_ptr<Node> secondnode_) const -> bool
+
+		auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool
 	{
 
 		if (firstnode_ == nullptr && secondnode_ == nullptr)
@@ -234,62 +219,17 @@ public:
 		else return(false);
 	}
 
-	auto remove(const T value, unique_ptr<Node> node) noexcept-> bool   // удаление узла,в котором находится объект со значением value
-	{ 
 
-		if (!node)
-			return false;
-		
-		else 
-		{
-		 
-		}
-
-	
-	}
-
-
-
-	/*bool BinarySearchTree::remove(int value) {
-		if (root == NULL)
-			return false;
-		else {
-			if (root->getValue() == value) {
-				BSTNode auxRoot(0);
-				auxRoot.setLeftChild(root);
-				BSTNode* removedNode = root->remove(value, &auxRoot);
-				root = auxRoot.getLeft();
-				if (removedNode != NULL) {
-					delete removedNode;
-					return true;
-				}
-				else
-					return false;
-			}
-			else {
-				BSTNode* removedNode = root->remove(value, NULL);
-				if (removedNode != NULL) {
-					delete removedNode;
-					return true;
-				}
-				else
-					return false;
-			}
-		}
-	}*/
-
-	//static auto copy(Node * tree) -> Node*
-	static auto copy(unique_ptr<Node> tree) -> unique_ptr<Node>
+	static auto copirate(Node * tree) -> Node*
 	{
 		if (!tree)
 		{
 			return NULL;
 		}
 
-		//Node * newnode = new Node(tree->value);
-		unique_ptr<Node> newnode =std::make_unique<Node>(tree->value);
-		newnode->left_ = copy(tree->left_);
-		newnode->right_ = copy(tree->right_);
+		Node * newnode = new Node(tree->value);
+		newnode->left_ = copirate(tree->left_);
+		newnode->right_ = copirate(tree->right_);
 
 		return newnode;
 	}
@@ -300,7 +240,7 @@ public:
 			return *this;
 
 		size_ = tree.size_;
-		root_ = root_->copy(tree.root_);
+		root_ = root_->copirate(tree.root_);
 		return *this;
 
 	};

@@ -6,12 +6,12 @@ SCENARIO ("if object exist")
    GIVEN("object")
    {
        int object=2;
-       BinarySearchTree <int> tree{1, 2, 3, 8};
+       BinarySearchTree <int> tree{1, 2, 3, 8, 12, 15};
        WHEN("find")
        {   tree.find(object);
            THEN(":)")
            {
-               REQUIRE(tree.find(object)!=nullptr);
+                REQUIRE(tree.find(object)!= nullptr );
            }
        }
    }
@@ -43,7 +43,7 @@ SCENARIO("for constant and non-constant")
             THEN("ok")
             {  
                 REQUIRE(tree1.find(object)!=nullptr);
-                REQUIRE(tree2.find(object)!=nullptr);
+                REQUIRE(tree2.find(object)!= nullptr);
             }
         }
        WHEN ("no") 

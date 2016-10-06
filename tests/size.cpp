@@ -35,7 +35,7 @@ SCENARIO ("Size of empty tree mustn't be 0", "[size !0]")
     }
 }
 
-SCENARIO (" for constant tree and non-constant tree ", "[const&nonconst]")
+SCENARIO (" for constant tree and non-constant tree ")
 {
     GIVEN("2 trees: constant and non-constant")
     {
@@ -43,9 +43,9 @@ SCENARIO (" for constant tree and non-constant tree ", "[const&nonconst]")
         const BinarySearchTree<int> tree2{2, 4, 6};
         WHEN ("compare sizes")
         {
-            THEN("sizes must be equal")
+             THEN ("sizes must be equal")
             {
-                REQUIRE(tree1.size() == tree2.size());
+                REQUIRE(tree1.size()==tree2.size());
             }
         }
     }

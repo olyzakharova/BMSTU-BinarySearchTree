@@ -195,8 +195,9 @@ public:
 			return &thisNode->value_;
 		}
 
-		return nullptr;
 	}
+				return nullptr;
+
 	}
 
 

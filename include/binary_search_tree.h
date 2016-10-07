@@ -139,8 +139,8 @@ public:
 		return size_;
 	};
 
-
-	auto insert(const T & value) noexcept -> bool {
+	template <typename T>
+	auto BinarySearhTree<T>::  insert(const T & value) noexcept -> bool {
 
 		//Node* thisNode = root_;
 		//Node* myNode = nullptr;
@@ -180,10 +180,10 @@ public:
 		};
 		size_++;
 		return true;
-	};
+	}
 
-
-	auto find(const T & value) const noexcept -> const T *
+	template <typename T>
+	auto BinarySearchTree<T>:: find(const T & value) const noexcept -> const unique_ptr<Node> T
 	{
 
 		//Node* thisNode = root_;
@@ -192,7 +192,7 @@ public:
 
 	{
 		return nullptr;
-	};
+	}
 
 	while (thisNode)
 	{
@@ -209,13 +209,14 @@ public:
 			return &thisNode->value_;
 		}
 	}
+
 		return nullptr;
-	
 	}
 
 		
 		//auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool
-		auto comparison(const unique_ptr<Node> firstnode_, const unique_ptr<Node> secondnode_) const -> bool
+	template <typename T>
+	auto BinarySearchTree <T>:: comparison(const unique_ptr<Node> firstnode_, const unique_ptr<Node> secondnode_) const -> bool
 	{
 
 		if (firstnode_ == nullptr && secondnode_ == nullptr)
@@ -234,49 +235,44 @@ public:
 		else return(false);
 	}
 
-	auto remove(const T value_, unique_ptr<Node> node_) noexcept-> bool   // удаление узла,в котором находится объект со значением value
-	{ 
+	
+	template <typename T>
+	friend auto BinarySearchTree<T>::remove(const T value_, unique_ptr<Node> node_) noexcept-> bool   // удаление узла,в котором находится объект со значением value
+	{
 
 		if (!node_)
 			return false;
-		
-		else 
-		{
-			if (value_ < node_->value_)
-				node_->left_ = remove(node_->left_, value_);
-		}
 
-		else 
-		{
-		  if (value_ > node_-> value_)
-			node_->right_=remove(node_->right_, value_)
-		}
+		else if (value_ < node_->value_)
+			node_->left_ = remove(node_->left_, value_);
+
+
+		else if (value_ > node_->value_)
+			node_->right_ = remove(node_->right_, value_);
 
 		else
 		{
 			if (node_->left_ = nullptr && node_->right_ == nullptr) // при сутствии узлов-потомков
-			{  
-				delete node_;
-				node_ = nullptr;
-			}
+				unique_ptr<Node> node_ = nullptr;
 
 			else if (node_->left_ == nullptr) // при наличии одного узла-потомка
 			{
-				unique_ptr<Node> tmp_ = node;
+				unique_ptr<Node> tmp_ = node_;
 				node_ = node_->left_;
 			}
-			else if  (node_->right_==nullptr)
+
+			else if (node_->right_ == nullptr)
 			{
 				unique_ptr<Node> tmp_ = node_;
 				node_ = node_->right_;
 				delete tmp_;
 			}
 			else if // если их все же двое
-			{  
+			{
 				unique_ptr<Node> chld_;
 				chld_ = node_->right_;
 				if ((chld_->left_ == nullptr) && (chld_->right_ == nullptr))
-				{ 
+				{
 					node_ = chld_;
 					delete chld_;
 					node_->right_ = nullptr;
@@ -296,7 +292,7 @@ public:
 
 						}
 						node_->value_ = lnode_->value_;
-						delete lnode;
+						unique_ptr<Node> lnode_ = nullptr;
 						lnodep_->left_ = nullptr;
 					}
 					else
@@ -304,20 +300,21 @@ public:
 						unique_ptr<Node> tmp_;
 						tmp_ = node_->right;
 						node_->right_ = tmp_->right_;
-						delete tmp_;
+						unique_ptr<Node> tmp_ = nullptr;
 					}
 				}
-				return true;
+			return true;
+
 			}
 		}
-
 	}
 
 
 
 	
 	//static auto copy(Node * tree) -> Node*
-	static auto copy(unique_ptr<Node> tree) -> unique_ptr<Node>
+	template <typename T>
+	friend static auto BinarySearchTree<T>:: copy(unique_ptr<Node> tree) -> unique_ptr<Node>
 	{
 		if (!tree)
 		{
@@ -332,7 +329,8 @@ public:
 		return newnode;
 	}
 
-	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
+	template <typename T>
+	auto BinarySearhTree<T>:: operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
 	{
 		if (this == &tree)
 			return *this;
@@ -343,7 +341,9 @@ public:
 
 	};
 
-	auto operator = (BinarySearchTree&& tree)->BinarySearchTree& //перемещения
+
+	template <typename T>
+	auto BinarySearchTree<T>:: operator = (BinarySearchTree&& tree)->BinarySearchTree& //перемещения
 	{
 		if (this == &tree)
 			return *this;
@@ -355,10 +355,11 @@ public:
 		root_ = tree.root_;
 		tree.root_ = nullptr;
 		return *this;
-	};
+	}
 
 
-	auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
+	template <typename T>
+	auto BinarySearhTree<T>:: operator == (const BinarySearchTree& tree) const -> bool // сравнение
 	{
 		if (size_ != tree.size_)
 		{
@@ -369,13 +370,10 @@ public:
 		{
 			comparison(root_, tree.root_);
 		}
-	};
-	~BinarySearchTree() {
-
-		delete root_;
-		size_ = 0;
 	}
-
-
-
-};
+ 
+template <typename T>	
+ BinarySearchTree<T>::~BinarySearchTree() 
+{
+	unique_ptr<Node> root_ = nullptr;
+}

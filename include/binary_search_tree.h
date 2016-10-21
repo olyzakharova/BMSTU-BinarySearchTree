@@ -300,15 +300,15 @@ public:
 	}
 
 
-static uto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
+        static auto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
 	{
 		if (!tree)
 		{
 			return NULL;
 		}
 
-		//Node * newnode = new Node(tree->value);
-		shared_ptr<Node> newnode = std::make_shared<Node>(tree->value);
+		
+		shared_ptr<Node> newnode = make_shared<Node>(tree->value);
 		newnode->left_ = copy(tree->left_);
 		newnode->right_ = copy(tree->right_);
 

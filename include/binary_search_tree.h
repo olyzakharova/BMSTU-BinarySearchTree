@@ -187,7 +187,7 @@ public:
 	{
 
 		//Node* thisNode = root_;
-		shared_ptr<Node> thisNode = root_.get();
+		shared_ptr<Node> thisNode = root_;
 
 	if (!root_)
 

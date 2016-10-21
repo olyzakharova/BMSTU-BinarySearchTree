@@ -58,8 +58,8 @@ private:
 	struct Node {
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 		~Node() {
-			delete left_;
-			delete right_;
+			 left_= nullptr;
+			 right_= nullptr;
 
 		}
 		T value_;
@@ -182,7 +182,7 @@ public:
 	{
                auto thisNode = root_;
 
-	if (!root_)
+	if (size_==0)
 
 	{
 		return nullptr;

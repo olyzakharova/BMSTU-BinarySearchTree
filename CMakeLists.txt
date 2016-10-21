@@ -9,4 +9,4 @@ include_directories(include)
 add_executable(binary_search_tree ${SOURCE_FILES} examples/main.cpp )
 add_executable(Tests ${TESTS_SOURCE} tests/main.cpp)
 
-install(DIRECTORY ${${CMAKE_CURRENT_SOURCE_DIR}/include) DESTINATION include
+install(DIRECTORY ${${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION include)

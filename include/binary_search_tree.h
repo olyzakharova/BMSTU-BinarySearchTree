@@ -47,13 +47,13 @@ std::ifstream & operator << (std::ifstream & out, const BinarySearchTree<T> & tr
 }
 
 template <typename T>
-class BinarySearchTree 
+class BinarySearchTree
 {
 
 private:
 	struct Node;
 	//Node * root_;
-	unique_ptr <Node> root_;
+	shared_ptr <Node> root_;
 	size_t size_;
 
 	struct Node {
@@ -66,8 +66,8 @@ private:
 		T value_;
 		//Node * left_;
 		//Node * right_;
-		unique_ptr<Node> left_;
-		unique_ptr<Node> right_;
+		shared_ptr<Node> left_;
+		shared_ptr<Node> right_;
 	};
 
 public:
@@ -94,10 +94,10 @@ public:
 
 	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(std::move(tree.root_))// конструктор перемещения
 	{
-		
+
 	}
 
-	
+
 
 	Node* GetRoot() const
 	{
@@ -106,7 +106,7 @@ public:
 
 
 	//void PreorderPrint(std::ostream & str, Node* thisNode) const noexcept // прямой
-	void PreorderPrint(std::ostream & str, unique_ptr<Node> thisNode) const noexcept // прямой
+	void PreorderPrint(std::ostream & str, shared_ptr<Node> thisNode) const noexcept // прямой
 	{
 		if (!thisNode)
 		{
@@ -119,9 +119,9 @@ public:
 	}
 
 	//void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
-	void InorderPrint(std::ostream & str, unique_ptr<Node> thisNode) const noexcept // симметричный	
+	void InorderPrint(std::ostream & str, shared_ptr<Node> thisNode) const noexcept // симметричный	
 	{
-		if (!thisNode) 
+		if (!thisNode)
 		{
 
 			return;
@@ -137,16 +137,16 @@ public:
 
 		return size_;
 	}
-};
 
-	template <typename T>
-	auto BinarySearhTree<T>::insert(const T & value) noexcept -> bool {
+
+
+	auto insert(const T & value) noexcept -> bool {
 
 		//Node* thisNode = root_;
 		//Node* myNode = nullptr;
 
-		unique_ptr<Node> thisNode = root_.get();
-		unique_ptr<Node> myNode = nullptr;
+		shared_ptr<Node> thisNode = root_.get();
+		shared_ptr<Node> myNode = nullptr;
 
 		if (root_ == nullptr)
 		{
@@ -182,12 +182,13 @@ public:
 		return true;
 	}
 
-	template <typename T>
-	auto BinarySearchTree<T>:: find(const T & value) const noexcept -> const unique_ptr<Node> T
+
+	auto find(const T & value) const noexcept -> const T*
 	{
 
 		//Node* thisNode = root_;
-		unique_ptr<Node> thisNode = root_.get();
+		shared_ptr<Node> thisNode = root_.get();
+
 	if (!root_)
 
 	{
@@ -210,13 +211,13 @@ public:
 		}
 	}
 
-		return nullptr;
+	return nullptr;
 	}
 
-		
+
 		//auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool
-	template <typename T>
-	auto BinarySearchTree <T>:: comparison(const unique_ptr<Node> firstnode_, const unique_ptr<Node> secondnode_) const -> bool
+
+		auto comparison(const shared_ptr<Node> firstnode_, const shared_ptr<Node> secondnode_) const -> bool
 	{
 
 		if (firstnode_ == nullptr && secondnode_ == nullptr)
@@ -235,9 +236,9 @@ public:
 		else return(false);
 	}
 
-	
-	template <typename T>
-	friend auto BinarySearchTree<T>::remove(const T value_, unique_ptr<Node> node_) noexcept-> bool   // удаление узла,в котором находится объект со значением value
+
+
+	auto remove(const T value_, shared_ptr<Node> node_) noexcept-> bool   // удаление узла,в котором находится объект со значением value
 	{
 
 		if (!node_)
@@ -253,23 +254,23 @@ public:
 		else
 		{
 			if (node_->left_ = nullptr && node_->right_ == nullptr) // при сутствии узлов-потомков
-				unique_ptr<Node> node_ = nullptr;
+				shared_ptr<Node> node_ = nullptr;
 
 			else if (node_->left_ == nullptr) // при наличии одного узла-потомка
 			{
-				unique_ptr<Node> tmp_ = node_;
+				shared_ptr<Node> tmp_ = node_;
 				node_ = node_->left_;
 			}
 
 			else if (node_->right_ == nullptr)
 			{
-				unique_ptr<Node> tmp_ = node_;
+				shared_ptr<Node> tmp_ = node_;
 				node_ = node_->right_;
 				delete tmp_;
 			}
 			else if // если их все же двое
 			{
-				unique_ptr<Node> chld_;
+				shared_ptr<Node> chld_;
 				chld_ = node_->right_;
 				if ((chld_->left_ == nullptr) && (chld_->right_ == nullptr))
 				{
@@ -281,8 +282,8 @@ public:
 				{
 					if ((node_->right_)->left_ != nullptr)
 					{
-						unique_ptr<Node> lnode_;
-						unique_ptr<Node> lnodep_;
+						shared_ptr<Node> lnode_;
+						shared_ptr<Node> lnodep_;
 						lnodep_ = node_->right_;
 						lnode_ = (node_->right_)->left_;
 						while (lnode_->left != nullptr)
@@ -292,28 +293,28 @@ public:
 
 						}
 						node_->value_ = lnode_->value_;
-						unique_ptr<Node> lnode_ = nullptr;
+						shared_ptr<Node> lnode_ = nullptr;
 						lnodep_->left_ = nullptr;
 					}
 					else
 					{
-						unique_ptr<Node> tmp_;
+						shared_ptr<Node> tmp_;
 						tmp_ = node_->right;
 						node_->right_ = tmp_->right_;
-						unique_ptr<Node> tmp_ = nullptr;
+						shared_ptr<Node> tmp_ = nullptr;
 					}
 				}
-			return true;
+				return true;
 			}
 		}
 	}
 
 
 
-	
+
 	//static auto copy(Node * tree) -> Node*
-	template <typename T>
-	friend static auto BinarySearchTree<T>::copy(unique_ptr<Node> tree) -> unique_ptr<Node>
+
+	static auto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
 	{
 		if (!tree)
 		{
@@ -321,15 +322,15 @@ public:
 		}
 
 		//Node * newnode = new Node(tree->value);
-		unique_ptr<Node> newnode =std::make_unique<Node>(tree->value);
+		shared_ptr<Node> newnode = std::make_shared<Node>(tree->value);
 		newnode->left_ = copy(tree->left_);
 		newnode->right_ = copy(tree->right_);
 
 		return newnode;
 	}
 
-	template <typename T>
-	auto BinarySearhTree<T>:: operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
+
+	auto operator = (const BinarySearchTree& tree)->BinarySearchTree& //копирования
 	{
 		if (this == &tree)
 			return *this;
@@ -341,8 +342,8 @@ public:
 	}
 
 
-	template <typename T>
-	auto BinarySearchTree<T>:: operator = (BinarySearchTree&& tree)->BinarySearchTree& //перемещения
+
+	auto operator = (BinarySearchTree&& tree)->BinarySearchTree& //перемещения
 	{
 		if (this == &tree)
 			return *this;
@@ -357,8 +358,8 @@ public:
 	}
 
 
-	template <typename T>
-	auto BinarySearhTree<T>:: operator == (const BinarySearchTree& tree) const -> bool // сравнение
+
+	auto operator == (const BinarySearchTree& tree) const -> bool // сравнение
 	{
 		if (size_ != tree.size_)
 		{
@@ -370,9 +371,11 @@ public:
 			comparison(root_, tree.root_);
 		}
 	}
- 
-template <typename T>	
- BinarySearchTree<T>::~BinarySearchTree() 
-{
-	unique_ptr<Node> root_ = nullptr;
-}
+
+
+	~BinarySearchTree()
+	{
+		shared_ptr<Node> root_ = nullptr;
+	}
+
+};

@@ -76,7 +76,7 @@ public:
 	{
 		for (auto it = list.begin(); it != list.end(); ++it)
 		{
-			insert(*it);
+			tree.insert(*it);
 		}
 	}
 
@@ -137,14 +137,15 @@ public:
 
 
 
-	auto insert(const T & value) noexcept -> bool {
+	auto insert(const T & value) noexcept -> bool
+	{
 
 		shared_ptr<Node> thisNode = root_;
 		shared_ptr<Node> myNode = nullptr;
 
 		if (root_ == nullptr)
 		{
-			root_ = make_shared <Node>(alue);
+			root_ = make_shared <Node>(value);
 			size_++;
 			return true;
 		}

@@ -14,14 +14,14 @@ std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tr
 
 	tree.PreorderPrint(out, tree.GetRoot());
 	return out;
-};
+}
 
 template <typename T>
 std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree) {
 
 	tree.InorderPrint(out, tree.GetRoot());
 	return out;
-};
+}
 
 template <typename T>
 std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
@@ -37,14 +37,14 @@ std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
 	}
 
 	return in;
-};
+}
 
 template <typename T>
 std::ifstream & operator << (std::ifstream & out, const BinarySearchTree<T> & tree)
 {
 	tree.PreorderPrint(out, tree.GetRoot());
 	return out;
-};
+}
 
 template <typename T>
 class BinarySearchTree 
@@ -57,12 +57,12 @@ private:
 	size_t size_;
 
 	struct Node {
-		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {};
+		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
 		~Node() {
 			delete left_;
 			delete right_;
 
-		};
+		}
 		T value_;
 		//Node * left_;
 		//Node * right_;
@@ -81,13 +81,13 @@ public:
 		{
 			insert(*it);
 		}
-	};
+	}
 
 
 	BinarySearchTree(const BinarySearchTree& tree) : size_(tree.size_), root_(nullptr)//конструктор копирования
 	{
 		root_ = copy(tree.root_);
-	};
+	}
 
 	//BinarySearchTree(BinarySearchTree&& tree)= default {};// конструктор перемещения
 
@@ -95,7 +95,7 @@ public:
 	BinarySearchTree(BinarySearchTree&& tree) : size_(tree.size_), root_(std::move(tree.root_))// конструктор перемещения
 	{
 		
-	};
+	}
 
 	
 
@@ -119,8 +119,7 @@ public:
 	}
 
 	//void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
-	void InorderPrint(std::ostream & str, unique_ptr<Node> thisNode) const noexcept // симметричный
-	
+	void InorderPrint(std::ostream & str, unique_ptr<Node> thisNode) const noexcept // симметричный	
 	{
 		if (!thisNode) 
 		{
@@ -131,7 +130,6 @@ public:
 		InorderPrint(str, thisNode->left_);
 		str << thisNode->value_ << " ";
 		InorderPrint(str, thisNode->right_);
-
 	}
 
 	auto size() const noexcept->size_t
@@ -142,7 +140,7 @@ public:
 };
 
 	template <typename T>
-	auto BinarySearhTree<T>::  insert(const T & value) noexcept -> bool {
+	auto BinarySearhTree<T>::insert(const T & value) noexcept -> bool {
 
 		//Node* thisNode = root_;
 		//Node* myNode = nullptr;
@@ -306,7 +304,6 @@ public:
 					}
 				}
 			return true;
-
 			}
 		}
 	}
@@ -316,7 +313,7 @@ public:
 	
 	//static auto copy(Node * tree) -> Node*
 	template <typename T>
-	friend static auto BinarySearchTree<T>:: copy(unique_ptr<Node> tree) -> unique_ptr<Node>
+	friend static auto BinarySearchTree<T>::copy(unique_ptr<Node> tree) -> unique_ptr<Node>
 	{
 		if (!tree)
 		{

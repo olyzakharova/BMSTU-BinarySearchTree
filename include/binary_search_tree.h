@@ -47,7 +47,8 @@ std::ifstream & operator << (std::ifstream & out, const BinarySearchTree<T> & tr
 };
 
 template <typename T>
-class BinarySearchTree {
+class BinarySearchTree 
+{
 
 private:
 	struct Node;

@@ -52,7 +52,6 @@ class BinarySearchTree
 
 private:
 	struct Node;
-	//Node * root_;
 	shared_ptr <Node> root_;
 	size_t size_;
 
@@ -64,8 +63,6 @@ private:
 
 		}
 		T value_;
-		//Node * left_;
-		//Node * right_;
 		shared_ptr<Node> left_;
 		shared_ptr<Node> right_;
 	};
@@ -99,7 +96,7 @@ public:
 
 
 
-	Node* GetRoot() const
+	auto GetRoot() const -> shared_ptr<Node>
 	{
 		return root_;
 	}
@@ -142,15 +139,12 @@ public:
 
 	auto insert(const T & value) noexcept -> bool {
 
-		//Node* thisNode = root_;
-		//Node* myNode = nullptr;
-
-		shared_ptr<Node> thisNode = root_.get();
+		shared_ptr<Node> thisNode = root_;
 		shared_ptr<Node> myNode = nullptr;
 
 		if (root_ == nullptr)
 		{
-			root_ = new Node(value);
+			root_ = make_shared <Node>(alue);
 			size_++;
 			return true;
 		}
@@ -212,8 +206,6 @@ public:
 	return nullptr;
 	}
 
-
-		//auto comparison(const Node * firstnode_, const Node * secondnode_) const -> bool
 
 		auto comparison(const shared_ptr<Node> firstnode_, const shared_ptr<Node> secondnode_) const -> bool
 	{
@@ -308,11 +300,7 @@ public:
 	}
 
 
-
-
-	//static auto copy(Node * tree) -> Node*
-
-	static auto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
+static uto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
 	{
 		if (!tree)
 		{

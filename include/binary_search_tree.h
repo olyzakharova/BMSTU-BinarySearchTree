@@ -166,11 +166,11 @@ public:
 		}
 		if (value < myNode->value_)
 		{
-			myNode->left_ = new Node(value);
+			myNode->left_ = make_shared <Node>(value);
 		}
 		else
 		{
-			myNode->right_ = new Node(value);
+			myNode->right_ = make_shared <Node>(value);
 		};
 		size_++;
 		return true;

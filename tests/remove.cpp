@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include <BinarySearchTree.hpp>
+#include <BinarySearchTree.h>
 
 SCENARIO ("delete main root")
 {

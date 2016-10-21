@@ -76,7 +76,7 @@ public:
 	{
 		for (auto it = list.begin(); it != list.end(); ++it)
 		{
-			tree.insert(*it);
+			insert(*it);
 		}
 	}
 

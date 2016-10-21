@@ -26,3 +26,5 @@ build_script:
   - cmake .. -G "NMake Makefiles" %CMAKE_PUGIXML_FLAGS% %CMAKE_CURL_FLAGS% %CMAKE_OPENSSL_FLAGS% -DBUILD_SHARED_LIBS=%BUILD_SHARED%
   - nmake
   - nmake install
+  
+  

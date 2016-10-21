@@ -185,9 +185,7 @@ public:
 
 	auto find(const T & value) const noexcept -> const T*
 	{
-
-		//Node* thisNode = root_;
-		shared_ptr<Node> thisNode = root_;
+               auto thisNode = root_;
 
 	if (!root_)
 

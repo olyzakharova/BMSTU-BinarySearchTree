@@ -138,7 +138,8 @@ public:
 	{
 
 		return size_;
-	};
+	}
+}
 
 	template <typename T>
 	auto BinarySearhTree<T>::  insert(const T & value) noexcept -> bool {

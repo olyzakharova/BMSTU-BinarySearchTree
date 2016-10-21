@@ -22,8 +22,9 @@ before_build:
    
 
 build_script:
-  - mkdir build && cd build
-  - cmake .. -G "NMake Makefiles" %CMAKE_PUGIXML_FLAGS% %CMAKE_CURL_FLAGS% %CMAKE_OPENSSL_FLAGS% -DBUILD_SHARED_LIBS=%BUILD_SHARED%
+  - mkdir build 
+  - cd build
+  - cmake .. -G "NMake Makefiles"
   - nmake
   - nmake install
   

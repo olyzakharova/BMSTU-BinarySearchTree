@@ -3,28 +3,32 @@
 #include <fstream>
 #include <initializer_list>
 #include <memory> //для умных указателей
+#include <exception> // для исключений
+#include <string>
 using namespace std;
 
 template <typename T>
 class BinarySearchTree;
 
-
 template <typename T>
-std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree) {
+std::ofstream & operator << (std::ofstream & out, const BinarySearchTree<T> & tree)
+{
 
 	tree.PreorderPrint(out, tree.GetRoot());
 	return out;
 }
 
 template <typename T>
-std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree) {
+std::ostream & operator << (std::ostream & out, const BinarySearchTree<T> & tree)
+{
 
 	tree.InorderPrint(out, tree.GetRoot());
 	return out;
 }
 
 template <typename T>
-std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree) {
+std::istream & operator >> (std::istream & in, BinarySearchTree<T> & tree)
+{
 	T value;
 	int size;
 	std::cout << "Size: ";
@@ -55,20 +59,22 @@ private:
 	shared_ptr <Node> root_;
 	size_t size_;
 
-	struct Node {
+	struct Node			
+	{
 		Node(T value) : value_(value), left_(nullptr), right_(nullptr) {}
-		~Node() {
-			 left_= nullptr;
-			 right_= nullptr;
+		~Node() 
+		{
+			left_ = nullptr;
+			right_ = nullptr;
 
 		}
+
 		T value_;
 		shared_ptr<Node> left_;
 		shared_ptr<Node> right_;
 	};
 
 public:
-
 
 	BinarySearchTree() : root_(nullptr), size_(0) {}
 
@@ -101,8 +107,6 @@ public:
 		return root_;
 	}
 
-
-	//void PreorderPrint(std::ostream & str, Node* thisNode) const noexcept // прямой
 	void PreorderPrint(std::ostream & str, shared_ptr<Node> thisNode) const noexcept // прямой
 	{
 		if (!thisNode)
@@ -115,7 +119,6 @@ public:
 		PreorderPrint(str, thisNode->right_);
 	}
 
-	//void InorderPrint(std::ostream & str, Node* thisNode) const noexcept // симметричный 
 	void InorderPrint(std::ostream & str, shared_ptr<Node> thisNode) const noexcept // симметричный	
 	{
 		if (!thisNode)
@@ -136,8 +139,7 @@ public:
 	}
 
 
-
-	auto insert(const T & value) noexcept -> bool
+    auto insert(const T & value) noexcept -> bool
 	{
 
 		shared_ptr<Node> thisNode = root_;
@@ -146,7 +148,6 @@ public:
 		if (root_ == nullptr)
 		{
 			root_ = make_shared <Node>(value);
-			size_++;
 			return true;
 		}
 		while (thisNode)
@@ -154,7 +155,7 @@ public:
 			myNode = thisNode;
 			if (value == myNode->value_)
 			{
-				return false;
+				throw logic_error(" this element already exist.");
 			}
 			else if (value < myNode->value_)
 			{
@@ -180,12 +181,12 @@ public:
 
 	auto find(const T & value) const noexcept -> const T*
 	{
-               auto thisNode = root_;
+		auto thisNode = root_;
 
-	if (size_==0)
+	if (size_ == 0)
 
 	{
-		return nullptr;
+		throw logic_error("can't find. this tree is empty.");
 	}
 
 	while (thisNode)
@@ -208,7 +209,7 @@ public:
 	}
 
 
-		auto comparison(const shared_ptr<Node> firstnode_, const shared_ptr<Node> secondnode_) const -> bool
+	auto comparison(const shared_ptr<Node> firstnode_, const shared_ptr<Node> secondnode_) const -> bool
 	{
 
 		if (firstnode_ == nullptr && secondnode_ == nullptr)
@@ -232,8 +233,14 @@ public:
 	auto remove(const T value_, shared_ptr<Node> node_) noexcept-> bool   // удаление узла,в котором находится объект со значением value
 	{
 
+		if (size_ == 0)
+		{
+			throw logic_error("this tree is empty.")
+		}
+		
 		if (!node_)
-			return false;
+			return nullptr;
+		
 
 		else if (value_ < node_->value_)
 			node_->left_ = remove(node_->left_, value_);
@@ -301,14 +308,14 @@ public:
 	}
 
 
-        static auto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
+	static auto copy(shared_ptr<Node> tree) -> shared_ptr<Node>
 	{
 		if (!tree)
 		{
 			return NULL;
 		}
 
-		
+
 		shared_ptr<Node> newnode = make_shared<Node>(tree->value);
 		newnode->left_ = copy(tree->left_);
 		newnode->right_ = copy(tree->right_);
@@ -360,7 +367,7 @@ public:
 	}
 
 
-	~BinarySearchTree()
+   ~BinarySearchTree()
 	{
 		shared_ptr<Node> root_ = nullptr;
 	}

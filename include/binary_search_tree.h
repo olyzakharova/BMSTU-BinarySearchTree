@@ -259,7 +259,7 @@ public:
 				node_ = node_->right_;
 				delete tmp_;
 			}
-			else if // если их все же двое
+            else // если их все же двое
 			{
 				shared_ptr<Node> chld_;
 				chld_ = node_->right_;
@@ -284,7 +284,7 @@ public:
 
 						}
 						node_->value_ = lnode_->value_;
-						shared_ptr<Node> lnode_ = nullptr;
+                        lnode_ = nullptr;
 						lnodep_->left_ = nullptr;
 					}
 					else
@@ -292,7 +292,7 @@ public:
 						shared_ptr<Node> tmp_;
 						tmp_ = node_->right;
 						node_->right_ = tmp_->right_;
-						shared_ptr<Node> tmp_ = nullptr;
+                        tmp_ = nullptr;
 					}
 				}
 				return true;

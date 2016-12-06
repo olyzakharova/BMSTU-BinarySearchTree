@@ -221,6 +221,7 @@ public:
 		else if (firstnode_ != nullptr && secondnode_ != nullptr)
 		{
 			return(
+				(firstnode_->value_ == secondnode_->value_) &&
 				comparison(firstnode_->left_, secondnode_->left_) &&
 				comparison(firstnode_->right_, secondnode_->right_)
 				);
@@ -266,7 +267,7 @@ public:
 				node_ = node_->right_;
 				delete tmp_;
 			}
-			else if // если их все же двое
+			else // если их все же двое
 			{
 				shared_ptr<Node> chld_;
 				chld_ = node_->right_;
@@ -362,7 +363,7 @@ public:
 
 		else
 		{
-			comparison(root_, tree.root_);
+			return comparison(root_, tree.root_);
 		}
 	}
 
